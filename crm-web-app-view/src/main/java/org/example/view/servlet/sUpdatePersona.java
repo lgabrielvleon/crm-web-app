@@ -31,7 +31,7 @@ public class sUpdatePersona extends HttpServlet {
         try {
             Persona objPersona = new Persona();
             objPersona.setId(Integer.parseInt(request.getParameter("id")));
-            objPersona.setName(request.getParameter("name"));
+            objPersona.setFirstName(request.getParameter("name"));
             objPersona.setLastName(request.getParameter("lastName"));
             objPersona.setPhone(request.getParameter("phone"));
             objPersona.setDocumentNumber(request.getParameter("documentNumber"));

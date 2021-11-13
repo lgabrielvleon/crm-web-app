@@ -21,7 +21,7 @@ public class sAddPersona extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             Persona objPersona = new Persona();
-            objPersona.setName(request.getParameter("name"));
+            objPersona.setFirstName(request.getParameter("name"));
             objPersona.setLastName(request.getParameter("lastName"));
             objPersona.setPhone(request.getParameter("phone"));
             objPersona.setDocumentNumber(request.getParameter("documentNumber"));

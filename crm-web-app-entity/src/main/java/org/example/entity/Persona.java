@@ -1,20 +1,32 @@
 package org.example.entity;
 
+import java.util.Date;
+
 public class Persona {
     private int id;
-    private String name;
+    private String firstName;
     private String lastName;
     private String phone;
     private String documentNumber;
+    private String birthday;
+    private String email;
+    private Date timestampRegister;
+    private Date timestampUpdate;
+    private User objUser;
 
-    public Persona(){this(0,"", "","","");}
+    public Persona(){this(0,"", "","","","","",new Date(),new Date(),new User());}
 
-    public Persona(int id, String name, String lastName, String phone, String documentNumber) {
+    public Persona(int id, String firstName, String lastName, String phone, String documentNumber, String birthday, String email, Date timestampRegister, Date timestampUpdate, User objUser) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.documentNumber = documentNumber;
+        this.birthday = birthday;
+        this.email = email;
+        this.timestampRegister = timestampRegister;
+        this.timestampUpdate = timestampUpdate;
+        this.objUser = objUser;
     }
 
     public int getId() {
@@ -25,12 +37,12 @@ public class Persona {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -57,14 +69,59 @@ public class Persona {
         this.documentNumber = documentNumber;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getTimestampRegister() {
+        return timestampRegister;
+    }
+
+    public void setTimestampRegister(Date timestampRegister) {
+        this.timestampRegister = timestampRegister;
+    }
+
+    public Date getTimestampUpdate() {
+        return timestampUpdate;
+    }
+
+    public void setTimestampUpdate(Date timestampUpdate) {
+        this.timestampUpdate = timestampUpdate;
+    }
+
+    public User getObjUser() {
+        return objUser;
+    }
+
+    public void setObjUser(User objUser) {
+        this.objUser = objUser;
+    }
+
     @Override
     public String toString() {
         return "Persona{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", documentNumber='" + documentNumber + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", email='" + email + '\'' +
+                ", timestampRegister=" + timestampRegister +
+                ", timestampUpdate=" + timestampUpdate +
+                ", objUser=" + objUser.toString() +
                 '}';
     }
 }
