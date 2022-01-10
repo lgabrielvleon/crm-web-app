@@ -29,7 +29,7 @@ public class sAutentication extends HttpServlet {
             logger.info(objPersona.toString());
             if (objPersona.getId() != 0){
                 session.setAttribute("objPersona", objPersona);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("StoreProducts");
             }else{
                 response.sendRedirect("login.jsp");
             }
@@ -39,10 +39,18 @@ public class sAutentication extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("type").equals("logout")){
-            HttpSession session = request.getSession();
-            session.removeAttribute("objPersona");
+
+        HttpSession session = request.getSession();
+        if (request.getParameter("type") != null){
+            if(request.getParameter("type").equals("logout")){
+                session.removeAttribute("objPersona");
+            }
+        }else{
+            if (session.getAttribute("objPersona")!=null){
+                response.sendRedirect("StoreProducts");
+            }else{
+                response.sendRedirect("login.jsp");
+            }
         }
-        response.sendRedirect("login.jsp");
     }
 }

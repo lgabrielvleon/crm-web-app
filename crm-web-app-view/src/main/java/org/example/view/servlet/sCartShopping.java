@@ -2,6 +2,7 @@ package org.example.view.servlet;
 
 import org.apache.log4j.Logger;
 import org.example.entity.Product;
+import org.example.entity.SaleDetail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,21 +29,38 @@ public class sCartShopping extends HttpServlet {
                 logger.info("ingreso idProduct");
                 int idProduct = Integer.parseInt(request.getParameter("idProduct"));
                 ArrayList<Product> products = (ArrayList<Product>) session.getAttribute("lstProducts");
-                ArrayList<Product> lstCartShopping = new ArrayList<Product>();
+                ArrayList<SaleDetail> lstCartShopping = new ArrayList<SaleDetail>();
                 logger.info("obtuvo lista productos");
                 if(session.getAttribute("lstCartShopping")!=null){
                     logger.info("si hay carrito");
-                    lstCartShopping = (ArrayList<Product>) session.getAttribute("lstCartShopping");
+                    lstCartShopping = (ArrayList<SaleDetail>) session.getAttribute("lstCartShopping");
                     logger.info("lee el carrito");
-                    for (Product product:products) {
-                        if (product.getId() == idProduct){
-                            objProductTmp = product;
-                        }
-                    }
+
+
                     String action = request.getParameter("action")+"";
                     logger.info(request.getParameter("action"));
                     if(request.getParameter("action") == null){
-                        lstCartShopping.add(objProductTmp);
+                        Boolean flagListExists = false;
+
+                        for (SaleDetail saleDetail: lstCartShopping){
+                            if (saleDetail.getObjProduct().getId() == idProduct){
+                                flagListExists = true;
+                                saleDetail.setUnits(saleDetail.getUnits()+1);
+                            }
+                        }
+
+                        logger.info("Flag si existe en lista: "+flagListExists);
+
+                        if (!flagListExists){
+                            objProductTmp = searchProduct(idProduct, products);
+
+                            SaleDetail objTmp = new SaleDetail();
+                            objTmp.setObjProduct(objProductTmp);
+                            objTmp.setUnits(1);
+                            objTmp.setUnitPrice(objProductTmp.getPrice());
+                            lstCartShopping.add(objTmp);
+                        }
+
                     }else if (action.equals("D")){
                         logger.info("Action D");
                         lstCartShopping.remove(idProduct);
@@ -50,12 +68,12 @@ public class sCartShopping extends HttpServlet {
                     }
 
                 }else{
-                    for (Product product:products) {
-                        if (product.getId() == idProduct){
-                            objProductTmp = product;
-                        }
-                    }
-                    lstCartShopping.add(objProductTmp);
+                    objProductTmp = searchProduct(idProduct, products);
+                    SaleDetail objTmp = new SaleDetail();
+                    objTmp.setObjProduct(objProductTmp);
+                    objTmp.setUnits(1);
+                    objTmp.setUnitPrice(objProductTmp.getPrice());
+                    lstCartShopping.add(objTmp);
                 }
 
 
@@ -67,5 +85,15 @@ public class sCartShopping extends HttpServlet {
         }catch (Exception e){
             logger.error(e);
         }
+    }
+
+    private Product searchProduct(int idProduct, ArrayList<Product> products){
+        Product objProductTmp = new Product();
+        for (Product product:products) {
+            if (product.getId() == idProduct){
+                objProductTmp = product;
+            }
+        }
+        return objProductTmp;
     }
 }

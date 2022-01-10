@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="org.example.entity.Product" %><%--
+<%@ page import="org.example.entity.Product" %>
+<%@ page import="org.example.entity.SaleDetail" %><%--
   Created by IntelliJ IDEA.
   User: lucasvasquez
   Date: 11/13/21
@@ -19,7 +20,7 @@
 
     <h1>Shopping Cart</h1>
     <%
-        ArrayList<Product> lstShoppingCart = (ArrayList<Product>) session.getAttribute("lstCartShopping");
+        ArrayList<SaleDetail> lstShoppingCart = (ArrayList<SaleDetail>) session.getAttribute("lstCartShopping");
         if (lstShoppingCart != null){
             out.print(lstShoppingCart.size());
     %>
@@ -29,18 +30,22 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Price Unit</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <%
                 int counter = 0;
-                for (Product product:lstShoppingCart) {
+                for (SaleDetail saleDetail:lstShoppingCart) {
             %>
                 <tr>
-                    <th scope="row"><%=product.getId()%></th>
-                    <td><%=product.getName()%></td>
-                    <td><%=product.getDescription()%></td>
+                    <th scope="row"><%=saleDetail.getObjProduct().getId()%></th>
+                    <td><%=saleDetail.getObjProduct().getName()%></td>
+                    <td><%=saleDetail.getObjProduct().getDescription()%></td>
+                    <td><%=saleDetail.getUnits()%></td>
+                    <td><%=saleDetail.getUnitPrice()%></td>
                     <td><a href="../CartShopping?idProduct=<%=counter%>&action=D"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             <%
@@ -57,7 +62,8 @@
         }
     %>
 
-    <a href="../StoreProducts" class="btn btn-primary">Seguir Comprando</a>
+    <a href="../StoreProducts" class="btn btn-secondary">Seguir Comprando</a>
+    <a href="../ConfirmSale" class="btn btn-primary">Realizar Compra</a>
 
 
 </div>
