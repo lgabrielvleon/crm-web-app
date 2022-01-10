@@ -51,10 +51,10 @@
                         <td><%=detail.getUnits()%></td>
                         <td><%=detail.getUnitPrice()%></td>
                         <td><%=detail.getSubTotal()%></td>
+                    </tr>
                     <%
                         }
                     %>
-                    </tr>
                 </tbody>
             </table>
         </div>
